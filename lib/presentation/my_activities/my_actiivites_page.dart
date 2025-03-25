@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weekday_selector/flutter_weekday_selector.dart';
+import 'package:prove_metro_app/config/geit_injector.dart';
+import 'package:prove_metro_app/presentation/activities/cubit/activities_cubit.dart';
+import 'package:prove_metro_app/presentation/activities/detail_activities_page.dart';
+import 'package:prove_metro_app/presentation/widget/activities_widget.dart';
+
+class MyActivitiesPage extends StatelessWidget {
+  const MyActivitiesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('MY ACTIVITIES'), centerTitle: true),
+      body: BlocConsumer<ActivitiesCubit, ActivitiesState>(
+        listener: (context, state) {},
+        buildWhen: (context, state) {
+          return state is ActivitiesData;
+        },
+        builder: (context, state) {
+          if (state is ActivitiesInitial) {
+            getIt<ActivitiesCubit>().getActivities();
+          }
+          if (state is ActivitiesData) {
+
+            var dataUser = state.data.where((element)=>element.enrolled).toList();
+
+            return ListView.builder(
+              itemCount: dataUser.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder:
+                            (_) =>
+                            DetailActivitiesPage(data: dataUser[index]),
+                      ),
+                    );
+                  },
+                  child: ActivitiesWidget(data: dataUser[index],
+                    showTrainer: true,
+                    onDetail: (){
+                    context.read<ActivitiesCubit>().updateUser(
+                      dataUser[index],
+                    );
+                  },)
+
+                );
+              },
+            );
+
+
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
+    );
+  }
+}
