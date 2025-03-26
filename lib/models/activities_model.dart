@@ -21,12 +21,14 @@ class ActivitiesModel {
   final String diaClase;
   @HiveField(7)
   final String horaClase;
+  @HiveField(8)
+  bool enrolled;
+  @HiveField(9)
+  bool hideEnroll;
 
   TrainersModel? trainer;
-  bool enrolled = false;
-  bool hideEnroll = false;
 
-  ActivitiesModel({
+  ActivitiesModel( {
     required this.idActividadColectiva,
     required this.nombreActividadColectiva,
     required this.descripcion,
@@ -35,6 +37,8 @@ class ActivitiesModel {
     required this.sociosInscritos,
     required this.diaClase,
     required this.horaClase,
+    required this.enrolled,
+    required this.hideEnroll,
   });
 
   static ActivitiesModel fromJson(Map<String, dynamic> json) => ActivitiesModel(
@@ -49,5 +53,7 @@ class ActivitiesModel {
             : [],
     diaClase: json['diaClase'],
     horaClase: json['horaClase'],
+      enrolled: false,
+      hideEnroll: false
   );
 }

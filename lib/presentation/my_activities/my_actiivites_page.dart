@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weekday_selector/flutter_weekday_selector.dart';
 import 'package:prove_metro_app/config/geit_injector.dart';
 import 'package:prove_metro_app/presentation/activities/cubit/activities_cubit.dart';
 import 'package:prove_metro_app/presentation/activities/detail_activities_page.dart';

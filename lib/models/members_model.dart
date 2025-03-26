@@ -13,20 +13,21 @@ class MembersModel {
   @HiveField(3)
   final String dni;
   @HiveField(4)
-  final List<int> actividades;
+  List<int> actividades;
 
   MembersModel({
     required this.idPersona,
     required this.nombre,
     required this.apellidos,
     required this.dni,
-    this.actividades=const []
+    required this.actividades
   });
 
   static MembersModel fromJson(Map<String, dynamic> json) => MembersModel(
-    idPersona: json['idPersona'] ?? 0,
+    idPersona: json['idPersona'],
     nombre: json['nombre'] ?? '',
-    apellidos: json['apellidos'] ?? '',
-    dni: json['DNI'] ?? ''
+    apellidos: json['apellidos'],
+    dni: json['DNI'],
+      actividades: []
   );
 }

@@ -25,13 +25,15 @@ class ActivitiesModelAdapter extends TypeAdapter<ActivitiesModel> {
       sociosInscritos: (fields[5] as List).cast<int>(),
       diaClase: fields[6] as String,
       horaClase: fields[7] as String,
+      enrolled: fields[8] as bool,
+      hideEnroll: fields[9] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, ActivitiesModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.idActividadColectiva)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class ActivitiesModelAdapter extends TypeAdapter<ActivitiesModel> {
       ..writeByte(6)
       ..write(obj.diaClase)
       ..writeByte(7)
-      ..write(obj.horaClase);
+      ..write(obj.horaClase)
+      ..writeByte(8)
+      ..write(obj.enrolled)
+      ..writeByte(9)
+      ..write(obj.hideEnroll);
   }
 
   @override
