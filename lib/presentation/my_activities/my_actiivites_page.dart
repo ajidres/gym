@@ -26,6 +26,32 @@ class MyActivitiesPage extends StatelessWidget {
 
             var dataUser = state.data.where((element)=>element.enrolled).toList();
 
+            if(dataUser.isEmpty){
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: [
+                    Image.asset(
+                      'assets/images/actions/pesas.png',
+
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 20,),
+                    Text(
+                      'No enrolled activities',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],),
+              );
+            }
+
             return ListView.builder(
               itemCount: dataUser.length,
               itemBuilder: (BuildContext context, int index) {

@@ -5,8 +5,20 @@ import 'package:prove_metro_app/presentation/activities/cubit/activities_cubit.d
 import 'package:prove_metro_app/presentation/activities/detail_activities_page.dart';
 import 'package:prove_metro_app/presentation/widget/activities_widget.dart';
 
-class ActivitiesPage extends StatelessWidget {
+class ActivitiesPage extends StatefulWidget {
   const ActivitiesPage({super.key});
+
+  @override
+  State<ActivitiesPage> createState() => _ActivitiesPageState();
+}
+
+class _ActivitiesPageState extends State<ActivitiesPage> {
+
+  @override
+  void initState() {
+    getIt<ActivitiesCubit>().getActivities();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +30,6 @@ class ActivitiesPage extends StatelessWidget {
           return state is ActivitiesData;
         },
         builder: (context, state) {
-          if (state is ActivitiesInitial) {
-            getIt<ActivitiesCubit>().getActivities();
-          }
           if (state is ActivitiesData) {
             return ListView.builder(
               itemCount: state.data.length,

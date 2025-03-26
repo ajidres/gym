@@ -15,7 +15,7 @@ class MemberRepositoryImpl implements MemberRepository{
 
   @override
   MembersModel? getMember() {
-    return _memberBox.values.first;
+    return _memberBox.values.isNotEmpty?_memberBox.values.first:null;
   }
 
   @override

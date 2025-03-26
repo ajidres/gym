@@ -33,10 +33,10 @@ class HomeCubit extends Cubit<HomeState> {
     var member = MembersModel.fromJson(jsonDecode(dataMember));
 
     var exist =
-        _getMemberUseCase.getMember() == null ? false : true;
+        _getMemberUseCase.getMember() == null ;
 
-    if (!exist) {
-      _saveMemberUseCase.saveMember(member);
+    if (exist) {
+      await _saveMemberUseCase.saveMember(member);
       loadActivities();
       loadTrainers();
     }
@@ -53,7 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
       return ActivitiesModel.fromJson(element);
     }).toList();
 
-    _saveActivitiesUseCase.saveActivities(list);
+    await _saveActivitiesUseCase.saveActivities(list);
 
   }
 
@@ -68,7 +68,7 @@ class HomeCubit extends Cubit<HomeState> {
       return TrainersModel.fromJson(element);
     }).toList();
 
-    _saveTrainersUseCase.saveTrainers(list);
+    await _saveTrainersUseCase.saveTrainers(list);
 
   }
 }

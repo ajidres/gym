@@ -19,7 +19,7 @@ class ActivitiesWidget extends StatelessWidget {
             child: Image.asset(
               'assets/images/activities/${data.imagen}',
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * (showTrainer?0.13:0.08),
+              height: MediaQuery.of(context).size.height * (showTrainer?0.13:0.09),
               fit: BoxFit.fill,
             ),
           ),
