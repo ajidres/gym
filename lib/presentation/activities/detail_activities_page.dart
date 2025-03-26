@@ -87,35 +87,50 @@ class DetailActivitiesPage extends StatelessWidget {
               ),
               Positioned(
                 top: 60,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 24, left: 24),
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data.nombreActividadColectiva,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                            ),
+                left: 14,
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data.nombreActividadColectiva,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            '${data.diaClase} ${data.horaClase}',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          Text(
-                            'Enrolled: ${data.sociosInscritos.length}',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                        ],
+                        ),
+                        Text(
+                          '${data.diaClase} ${data.horaClase}',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Text(
+                          'Enrolled: ${data.sociosInscritos.length}',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.3),
+                    Visibility(visible: data.hideEnroll,child:SizedBox(
+                      width: MediaQuery.of(context).size.width*0.25,
+                      child: Text(
+                        'You already have an activity at the same time enrolled',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.34),
-                      ElevatedButton(
+                    )),
+                    Visibility(
+                      visible: !data.hideEnroll,
+                      child: ElevatedButton(
                         onPressed: () {
-                          context.read<ActivitiesCubit>().updateUser(data);
+                          context.read<ActivitiesCubit>().updateActivity(
+                            data,
+                          );
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(
@@ -126,17 +141,17 @@ class DetailActivitiesPage extends StatelessWidget {
                             Size(100, 20),
                           ),
                           shape:
-                              WidgetStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                  side: BorderSide(
-                                    color:
-                                        data.enrolled
-                                            ? Colors.red
-                                            : Colors.amber,
-                                  ),
-                                ),
+                          WidgetStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                              side: BorderSide(
+                                color:
+                                data.enrolled
+                                    ? Colors.red
+                                    : Colors.amber,
                               ),
+                            ),
+                          ),
                         ),
                         child: Text(
                           data.enrolled ? 'UNROLL' : 'ENROLL',
@@ -147,8 +162,8 @@ class DetailActivitiesPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

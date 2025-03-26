@@ -69,7 +69,7 @@ class MyActivitiesPage extends StatelessWidget {
                   child: ActivitiesWidget(data: dataUser[index],
                     showTrainer: true,
                     onDetail: (){
-                    context.read<ActivitiesCubit>().updateUser(
+                    context.read<ActivitiesCubit>().updateActivity(
                       dataUser[index],
                     );
                   },)

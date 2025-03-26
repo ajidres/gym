@@ -24,6 +24,7 @@ class ActivitiesModel {
 
   TrainersModel? trainer;
   bool enrolled = false;
+  bool hideEnroll = false;
 
   ActivitiesModel({
     required this.idActividadColectiva,

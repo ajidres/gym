@@ -46,7 +46,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                     );
                   },
                   child: ActivitiesWidget(data: state.data[index],onDetail: (){
-                    context.read<ActivitiesCubit>().updateUser(
+                    context.read<ActivitiesCubit>().updateActivity(
                       state.data[index],
                     );
                   },),

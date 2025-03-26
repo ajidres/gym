@@ -22,7 +22,8 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
     this._getTrainersUseCase,
     this._getActivitiesUseCase,
     this._getMemberUseCase,
-    this._saveMemberUseCase, this._saveActivitiesUseCase,
+    this._saveMemberUseCase,
+    this._saveActivitiesUseCase,
   ) : super(ActivitiesInitial());
 
   Future<void> getActivities() async {
@@ -40,26 +41,28 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
         element.idActividadColectiva,
       );
     }
+
     Future.delayed(const Duration(milliseconds: 200), () {
       emit(ActivitiesData(dataActivities!));
     });
   }
 
-  Future<void> updateUser(ActivitiesModel activity) async {
+  Future<void> updateActivity(ActivitiesModel activity) async {
     if (activity.enrolled) {
       dataUser!.actividades.removeWhere(
         (element) => element == activity.idActividadColectiva,
       );
 
       activity.sociosInscritos.removeWhere(
-            (element) => element == dataUser!.idPersona,
+        (element) => element == dataUser!.idPersona,
       );
-
-      activity.enrolled=false;
+      activity.enrolled = false;
+      checkEnrolled(activity);
     } else {
       dataUser!.actividades.add(activity.idActividadColectiva);
       activity.sociosInscritos.add(dataUser!.idPersona);
-      activity.enrolled=true;
+      activity.enrolled = true;
+      checkEnrolled(activity);
     }
 
     await _saveMemberUseCase.saveMember(dataUser!);
@@ -68,7 +71,17 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
     Future.delayed(const Duration(milliseconds: 200), () {
       emit(ActivitiesData(dataActivities!));
     });
+  }
 
 
+  void checkEnrolled(ActivitiesModel data) {
+    dataActivities!
+        .where(
+          (activity) =>
+              activity.idActividadColectiva != data.idActividadColectiva &&
+              activity.diaClase == data.diaClase &&
+              activity.horaClase == data.horaClase,
+        )
+        .forEach((single) => single.hideEnroll = !single.hideEnroll);
   }
 }

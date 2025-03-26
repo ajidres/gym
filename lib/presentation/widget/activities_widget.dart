@@ -64,7 +64,20 @@ class ActivitiesWidget extends StatelessWidget {
                   ),
                 ),
 
-                ElevatedButton(
+            Visibility(visible: data.hideEnroll,child:SizedBox(
+              width: MediaQuery.of(context).size.width*0.3,
+              child: Text(
+                'You already have an activity at the same time enrolled',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold
+                ),
+                textAlign: TextAlign.center,
+              ),
+            )),
+
+            Visibility(visible: !data.hideEnroll,child: ElevatedButton(
                   onPressed: onDetail,
                   style: ButtonStyle(
                     backgroundColor:
@@ -105,7 +118,7 @@ class ActivitiesWidget extends StatelessWidget {
                     ),
                     maxLines: 3,
                   ),
-                ),
+                )),
               ],
             ),
           ),
